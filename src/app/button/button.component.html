@@ -1,0 +1,5 @@
+<div class="p-4 border rounded"
+     [class.bg-gray-100]="!!disabled"
+     (click)="selected.emit(!!disabled)">
+  <ng-content></ng-content>
+</div>

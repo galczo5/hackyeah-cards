@@ -1,0 +1,6 @@
+<div class="border border-2 rounded p-4"
+     [class.border-red-900]="!!active"
+     (click)="selected.emit(!!active)"
+     style="height: 200px; width: 150px;">
+  <ng-content></ng-content>
+</div>

@@ -1,0 +1,17 @@
+<div class="border p-4 text-center">
+  <div>
+    <strong>Aktywny gracz: {{ gameStateService.getActivePlayerName() | async }}</strong>
+  </div>
+  <div>
+    <app-player-points></app-player-points>
+  </div>
+  <div class="flex justify-center gap-2 mt-4">
+    <app-button (click)="drawResources()">Pociągnij kartę zasobów</app-button>
+    <app-button (selected)="drawGoal($event)"
+                [disabled]="(gameStateService.drawGoalDisabled() | async)">
+      Pociągnij kartę celu
+    </app-button>
+    <app-button (click)="randomizeResources()">Tasuj zasoby</app-button>
+    <app-button (click)="debug()">Handluj</app-button>
+  </div>
+</div>

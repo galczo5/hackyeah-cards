@@ -1,0 +1,10 @@
+<div class="flex flex-col gap-2 border rounded">
+  <strong>Budowle:</strong>
+  <div class="flex gap-2 p-4">
+    <app-card *ngFor="let card of (gameStateService.getActivePlayerGoals() | async)"
+              [active]="gameStateService.canAchieveGoal(card) | async"
+              (selected)="upgrade($event, card)">
+      {{ card }}
+    </app-card>
+  </div>
+</div>
