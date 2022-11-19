@@ -18,6 +18,7 @@ import { ManualComponent } from './manual/manual.component';
 import { ResourceCardComponent } from './resource-card/resource-card.component';
 import { GoalCardComponent } from './goal-card/goal-card.component';
 import { TheEndComponent } from './the-end/the-end.component';
+import { EpicBackgroundMusicPlayerComponent } from './epic-background-music-player/epic-background-music-player.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { TheEndComponent } from './the-end/the-end.component';
     ManualComponent,
     ResourceCardComponent,
     GoalCardComponent,
-    TheEndComponent
+    TheEndComponent,
+    EpicBackgroundMusicPlayerComponent
   ],
   imports: [
     BrowserModule,
