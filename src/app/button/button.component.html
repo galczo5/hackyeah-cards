@@ -1,8 +1,0 @@
-<div class="p-4 border border-5 transition-color text-center"
-     [class.bg-gray-500]="!!disabled"
-     [class.cursor-not-allowed]="!!disabled"
-     [class.hover:text-black]="!disabled"
-     [class.hover:bg-white]="!disabled"
-     (click)="!disabled && selected.emit(!!disabled)">
-  <ng-content></ng-content>
-</div>
