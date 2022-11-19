@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {GameStateService} from "../game-state.service";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-the-end',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TheEndComponent implements OnInit {
 
-  constructor() { }
+  king = this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/kazimierz.png');
+
+  constructor(public readonly gameStateService: GameStateService,
+              private readonly domSanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
   }

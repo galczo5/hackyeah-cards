@@ -100,6 +100,13 @@ export class GameStateService {
     return this.state$.asObservable();
   }
 
+  getPlayers(): Observable<Array<Player>> {
+    return this.state$
+      .pipe(
+        map(s => s.players)
+      );
+  }
+
   getActivePlayerName(): Observable<string> {
     return this.state$.pipe(map(p => p.activeUser));
   }
@@ -159,6 +166,10 @@ export class GameStateService {
       .pipe(
         map(p => p.length >= 3)
       );
+  }
+
+  getResourceStack() {
+    return this.state$.pipe(map(p => p.resourcesStack));
   }
 
   newGame(): void {
