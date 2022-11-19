@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {GameStateService, GoalCard} from "../game-state.service";
+import {GameStateService, GoalCard, getGoalPrice, ResourceCard, GoalPrice, getGoalPoints} from "../game-state.service";
 import {NextUserService} from "../next-user.service";
 
 @Component({
@@ -8,6 +8,9 @@ import {NextUserService} from "../next-user.service";
   styleUrls: ['./player-goals.component.css']
 })
 export class PlayerGoalsComponent implements OnInit {
+
+  ResourceCard = ResourceCard;
+  GoalCard = GoalCard;
 
   constructor(public readonly gameStateService: GameStateService,
               private readonly nextUserService: NextUserService) { }
@@ -21,6 +24,20 @@ export class PlayerGoalsComponent implements OnInit {
     }
 
     this.gameStateService.upgrade(card);
+    this.nextUserService.nextUser();
+  }
+
+  getGoalPrice(goal: GoalCard, res: ResourceCard): number {
+    const goalPrice = getGoalPrice(goal);
+    return goalPrice[res];
+  }
+
+  getGoalPoints(goal: GoalCard): number {
+    return getGoalPoints(goal);
+  }
+
+  removeGoal(card: GoalCard) {
+    this.gameStateService.removeGoal(card);
     this.nextUserService.nextUser();
   }
 }

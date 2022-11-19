@@ -1,8 +1,16 @@
-<div class="flex flex-col gap-2 border rounded">
+<div class="flex flex-col gap-2 border border-5 p-4"
+     *ngIf="(gameStateService.getActivePlayerResources() | async)?.length; else noResources">
   <strong>Zasoby:</strong>
   <div class="flex flex-wrap gap-2 p-4">
-    <app-card *ngFor="let card of (gameStateService.getActivePlayerResources() | async)">
-      {{ card }}
-    </app-card>
+    <app-resource-card *ngFor="let card of (gameStateService.getActivePlayerResources() | async)"
+                       [card]="card"></app-resource-card>
   </div>
 </div>
+
+<ng-template #noResources>
+  <div class="flex flex-col gap-2 border border-5 p-4 text-center">
+    BRAK ZASOBOW
+    <br>
+    POCIAGNIJ KARTE ZASOBOW
+  </div>
+</ng-template>

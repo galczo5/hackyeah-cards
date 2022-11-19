@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {GameStateService} from "../game-state.service";
+import {Component, OnInit} from '@angular/core';
+import {GameStateService, ResourceCard} from "../game-state.service";
 
 @Component({
   selector: 'app-player-resources',
@@ -12,5 +12,4 @@ export class PlayerResourcesComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

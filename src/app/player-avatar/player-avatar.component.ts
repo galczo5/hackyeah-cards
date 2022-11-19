@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {GameStateService} from "../game-state.service";
+import {SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-player-avatar',
@@ -7,6 +8,9 @@ import {GameStateService} from "../game-state.service";
   styleUrls: ['./player-avatar.component.css']
 })
 export class PlayerAvatarComponent implements OnInit {
+
+  @Input()
+  imgSrc: SafeResourceUrl | null = null;
 
   constructor(public readonly gameStateService: GameStateService) { }
 

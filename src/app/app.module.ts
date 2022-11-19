@@ -12,6 +12,12 @@ import { PlayerResourcesComponent } from './player-resources/player-resources.co
 import { PlayerGoalsComponent } from './player-goals/player-goals.component';
 import { PlayerPointsComponent } from './player-points/player-points.component';
 import { PlayerAvatarComponent } from './player-avatar/player-avatar.component';
+import { TimerComponent } from './timer/timer.component';
+import { IntroComponent } from './intro/intro.component';
+import { ManualComponent } from './manual/manual.component';
+import { ResourceCardComponent } from './resource-card/resource-card.component';
+import { GoalCardComponent } from './goal-card/goal-card.component';
+import { TheEndComponent } from './the-end/the-end.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +30,13 @@ import { PlayerAvatarComponent } from './player-avatar/player-avatar.component';
     PlayerResourcesComponent,
     PlayerGoalsComponent,
     PlayerPointsComponent,
-    PlayerAvatarComponent
+    PlayerAvatarComponent,
+    TimerComponent,
+    IntroComponent,
+    ManualComponent,
+    ResourceCardComponent,
+    GoalCardComponent,
+    TheEndComponent
   ],
   imports: [
     BrowserModule,

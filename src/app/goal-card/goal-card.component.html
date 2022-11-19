@@ -1,0 +1,44 @@
+<app-card [active]="active" (selected)="selected.emit($event)">
+  <div class="flex flex-col h-full p-4 bg-gray-600">
+    <div class="grow text-center">
+      <span class="bg-black">{{ card }}</span>
+      <img *ngIf="card === GoalCard.Zamek"
+           src="./assets/gold.png"
+           alt=""
+           class="mx-auto"
+           style="height: 100px;">
+      <img *ngIf="card === GoalCard.Baszta"
+           src="./assets/gold.png"
+           alt=""
+           class="mx-auto"
+           style="height: 100px;">
+      <img *ngIf="card === GoalCard.Tawerna"
+           src="./assets/srebro.png"
+           alt=""
+           class="mx-auto"
+           style="height: 100px;">
+      <img *ngIf="card === GoalCard.Dom"
+           src="./assets/srebro.png"
+           alt=""
+           class="mx-auto"
+           style="height: 100px;">
+    </div>
+    <div>
+      <div class="text-xs" *ngIf="getGoalPrice(card, ResourceCard.Drewno)">
+        {{ getGoalPrice(card, ResourceCard.Drewno) }} x {{ ResourceCard.Drewno }}
+      </div>
+      <div class="text-xs" *ngIf="getGoalPrice(card, ResourceCard.Zaprawa)">
+        {{ getGoalPrice(card, ResourceCard.Zaprawa) }} x {{ ResourceCard.Zaprawa }}
+      </div>
+      <div class="text-xs" *ngIf="getGoalPrice(card, ResourceCard.Cegla)">
+        {{ getGoalPrice(card, ResourceCard.Cegla) }} x {{ ResourceCard.Cegla }}
+      </div>
+      <div class="text-xs mt-1 text-red-500">
+        {{ getGoalPoints(card) }} PKT
+      </div>
+      <div *ngIf="removable"
+           class="text-xs text-right mt-1 cursor-pointer"
+           (click)="remove.emit(card)">USUN</div>
+    </div>
+  </div>
+</app-card>

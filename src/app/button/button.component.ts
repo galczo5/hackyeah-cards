@@ -8,7 +8,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class ButtonComponent implements OnInit {
 
   @Input()
-  disabled: boolean | null = false;
+  disabled: boolean | null | undefined = false;
 
   @Output()
   selected = new EventEmitter<boolean>();

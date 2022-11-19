@@ -16,7 +16,7 @@ export type Player = {
 
 export enum ResourceCard {
   'Drewno' = 'Drewno',
-  'Kamień' = 'Kamień',
+  'Cegla' = 'Cegla',
   'Zaprawa' = 'Zaprawa'
 }
 
@@ -37,10 +37,10 @@ export type State = {
 export type GoalPrice = {
   [ResourceCard.Drewno]: number,
   [ResourceCard.Zaprawa]: number,
-  [ResourceCard.Kamień]: number
+  [ResourceCard.Cegla]: number
 }
 
-function getGoalPoints(goal: GoalCard): number {
+export function getGoalPoints(goal: GoalCard): number {
   switch (goal) {
     case GoalCard.Dom:
       return 1;
@@ -53,16 +53,16 @@ function getGoalPoints(goal: GoalCard): number {
   }
 }
 
-function getGoalPrice(goal: GoalCard): GoalPrice {
+export function getGoalPrice(goal: GoalCard): GoalPrice {
   switch (goal) {
     case GoalCard.Dom:
-      return {[ResourceCard.Drewno]: 1, [ResourceCard.Kamień]: 1, [ResourceCard.Zaprawa]: 0};
+      return {[ResourceCard.Drewno]: 1, [ResourceCard.Cegla]: 1, [ResourceCard.Zaprawa]: 0};
     case GoalCard.Tawerna:
-      return {[ResourceCard.Drewno]: 1, [ResourceCard.Kamień]: 1, [ResourceCard.Zaprawa]: 1};
+      return {[ResourceCard.Drewno]: 1, [ResourceCard.Cegla]: 1, [ResourceCard.Zaprawa]: 1};
     case GoalCard.Baszta:
-      return {[ResourceCard.Drewno]: 1, [ResourceCard.Kamień]: 2, [ResourceCard.Zaprawa]: 2};
+      return {[ResourceCard.Drewno]: 1, [ResourceCard.Cegla]: 2, [ResourceCard.Zaprawa]: 2};
     case GoalCard.Zamek:
-      return {[ResourceCard.Drewno]: 2, [ResourceCard.Kamień]: 3, [ResourceCard.Zaprawa]: 2};
+      return {[ResourceCard.Drewno]: 2, [ResourceCard.Cegla]: 3, [ResourceCard.Zaprawa]: 2};
   }
 }
 
@@ -117,7 +117,7 @@ export class GameStateService {
     return this.state$.pipe(
       map(p => {
         const index = p.players.findIndex(x => x.name === p.activeUser);
-        return p.players[index].hand.resource;
+        return p.players[index].hand.resource.sort((a, b) => a < b ? -1 : 1);
       })
     );
   }
@@ -131,7 +131,7 @@ export class GameStateService {
 
         return goalPrice[ResourceCard.Drewno] <= resources.filter(r => r === ResourceCard.Drewno).length &&
           goalPrice[ResourceCard.Zaprawa] <= resources.filter(r => r === ResourceCard.Zaprawa).length &&
-          goalPrice[ResourceCard.Kamień] <= resources.filter(r => r === ResourceCard.Kamień).length;
+          goalPrice[ResourceCard.Cegla] <= resources.filter(r => r === ResourceCard.Cegla).length;
       })
     );
   }
@@ -163,7 +163,7 @@ export class GameStateService {
 
   newGame(): void {
     console.log('-- New Game');
-    const player1 = 'Maćko';
+    const player1 = 'Maciej';
     this.state = {
       players: [
         {
@@ -173,7 +173,7 @@ export class GameStateService {
           imageUrl: './assets/macko.png'
         },
         {
-          name: 'Zbyszko',
+          name: 'Zbyszek',
           hand: {goals: [], resource: []},
           points: 0,
           imageUrl: './assets/zbyszko.png'
@@ -188,7 +188,7 @@ export class GameStateService {
       activeUser: player1,
       resourcesStack: this.randomSortResources([
         ...new Array(15).fill(ResourceCard.Drewno),
-        ...new Array(15).fill(ResourceCard.Kamień),
+        ...new Array(15).fill(ResourceCard.Cegla),
         ...new Array(15).fill(ResourceCard.Zaprawa)
       ]),
       goalsStack: this.randomSortGoals([
@@ -298,8 +298,34 @@ export class GameStateService {
 
     const activeUserIndex = this.state.players.findIndex(p => p.name === this.state?.activeUser);
     const userGoals = [...this.state.players[activeUserIndex].hand.goals];
+    let userResources = [...this.state.players[activeUserIndex].hand.resource];
 
     const index = userGoals.findIndex(g => g === card);
+
+    const price = getGoalPrice(card);
+
+    // No reason to make generic when you can copy and paste :P
+
+    const r1 = price[ResourceCard.Zaprawa];
+    for (let i = 0; i < r1; i++) {
+      userResources = userResources.filter(
+        (value, ri, array) => ri !== array.indexOf(ResourceCard.Zaprawa)
+      )
+    }
+
+    const r2 = price[ResourceCard.Drewno];
+    for (let i = 0; i < r2; i++) {
+      userResources = userResources.filter(
+        (value, ri, array) => ri !== array.indexOf(ResourceCard.Drewno)
+      )
+    }
+
+    const r3 = price[ResourceCard.Cegla];
+    for (let i = 0; i < r3; i++) {
+      userResources = userResources.filter(
+        (value, ri, array) => ri !== array.indexOf(ResourceCard.Cegla)
+      )
+    }
 
     this.state = {
       ...this.state,
@@ -313,6 +339,34 @@ export class GameStateService {
           points: p.points + getGoalPoints(card),
           hand: {
             goals: userGoals.filter((value, i) => i !== index),
+            resource: userResources
+          }
+        };
+      })
+    };
+    this.state$.next(this.state);
+  }
+
+  removeGoal(card: GoalCard): void {
+    if (!this.state) {
+      return;
+    }
+
+    const activeUserIndex = this.state.players.findIndex(p => p.name === this.state?.activeUser);
+    const userGoals = [...this.state.players[activeUserIndex].hand.goals]
+      .filter((value, index, array) => index !== array.indexOf(card));
+
+    this.state = {
+      ...this.state,
+      players: this.state.players.map((p, i) => {
+        if (i !== activeUserIndex) {
+          return p;
+        }
+
+        return {
+          ...p,
+          hand: {
+            goals: userGoals,
             resource: p.hand.resource
           }
         };

@@ -1,1 +1,4 @@
-<img [src]="gameStateService.getActivePlayerAvatar() | async" >
+<div class="border border-5 bg-white py-4 shadow-xl">
+  <img *ngIf="!imgSrc" [src]="gameStateService.getActivePlayerAvatar() | async">
+  <img *ngIf="imgSrc" [src]="imgSrc">
+</div>

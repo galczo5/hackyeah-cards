@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {GameStateService} from "../game-state.service";
-import {timer} from "rxjs";
 import {NextUserService} from "../next-user.service";
 
 @Component({
@@ -11,17 +10,24 @@ import {NextUserService} from "../next-user.service";
 export class ActionsBarComponent implements OnInit {
 
   constructor(public readonly gameStateService: GameStateService,
-              private readonly nextUserService: NextUserService) {
+              public readonly nextUserService: NextUserService) {
   }
 
   ngOnInit(): void {
   }
 
-  debug(): void {
+  instantNext(disabled: boolean): void {
+    if (disabled) {
+      return;
+    }
     this.gameStateService.nextUser();
   }
 
-  drawResources() {
+  drawResources(disabled: boolean) {
+    if (disabled) {
+      return;
+    }
+
     this.gameStateService.drawResourceCard();
     this.nextUserService.nextUser();
   }
@@ -35,7 +41,11 @@ export class ActionsBarComponent implements OnInit {
     this.nextUserService.nextUser();
   }
 
-  randomizeResources() {
+  randomizeResources(disabled: boolean) {
+    if (disabled) {
+      return;
+    }
+
     this.gameStateService.randomizeResources();
     this.nextUserService.nextUser();
   }
