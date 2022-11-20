@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GameStateService} from "../game-state.service";
 import {NextUserService} from "../next-user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-actions-bar',
@@ -10,7 +11,8 @@ import {NextUserService} from "../next-user.service";
 export class ActionsBarComponent implements OnInit {
 
   constructor(public readonly gameStateService: GameStateService,
-              public readonly nextUserService: NextUserService) {
+              public readonly nextUserService: NextUserService,
+              private readonly router: Router) {
   }
 
   ngOnInit(): void {
@@ -48,5 +50,13 @@ export class ActionsBarComponent implements OnInit {
 
     this.gameStateService.randomizeResources();
     this.nextUserService.nextUser();
+  }
+
+  trade(disabled: boolean) {
+    if (disabled) {
+      return;
+    }
+
+    this.router.navigateByUrl('/trade');
   }
 }

@@ -120,6 +120,25 @@ export class GameStateService {
     );
   }
 
+  getActivePlayerDuplicatedCards(): Observable<Array<ResourceCard>> {
+    return this.state$.pipe(
+      map(p => {
+        const index = p.players.findIndex(x => x.name === p.activeUser);
+        const resourceCards = p.players[index].hand.resource;
+
+        const resource1 = resourceCards.filter(r => r === ResourceCard.Drewno).length > 1;
+        const resource2 = resourceCards.filter(r => r === ResourceCard.Cegla).length > 1;
+        const resource3 = resourceCards.filter(r => r === ResourceCard.Zaprawa).length > 1;
+
+        return [
+          ...(resource1 ? [ResourceCard.Drewno] : []),
+          ...(resource2 ? [ResourceCard.Cegla] : []),
+          ...(resource3 ? [ResourceCard.Zaprawa] : [])
+        ];
+      })
+    );
+  }
+
   getActivePlayerResources(): Observable<Array<ResourceCard>> {
     return this.state$.pipe(
       map(p => {
@@ -356,6 +375,41 @@ export class GameStateService {
       })
     };
     this.state$.next(this.state);
+  }
+
+  trade(selectedCard: ResourceCard, toBuy: ResourceCard) {
+    if (!this.state) {
+      return;
+    }
+
+    const activeUserIndex = this.state.players.findIndex(p => p.name === this.state?.activeUser);
+    const userGoals = [...this.state.players[activeUserIndex].hand.goals];
+    let userResources = [...this.state.players[activeUserIndex].hand.resource];
+
+    for (let i = 0; i < 2; i++) {
+      userResources = userResources.filter(
+        (value, ri, array) => ri !== array.indexOf(selectedCard)
+      )
+    }
+
+    this.state = {
+      ...this.state,
+      players: this.state.players.map((p, i) => {
+        if (i !== activeUserIndex) {
+          return p;
+        }
+
+        return {
+          ...p,
+          hand: {
+            goals: p.hand.goals,
+            resource: [...userResources, toBuy]
+          }
+        };
+      })
+    };
+    this.state$.next(this.state);
+
   }
 
   removeGoal(card: GoalCard): void {

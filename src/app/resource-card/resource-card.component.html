@@ -1,4 +1,4 @@
-<app-card *ngIf="card">
+<app-card *ngIf="card" [active]="active">
   <div class="h-full w-full p-4"
        style="background-image: url('{{getImageUrl(card)}}'); background-size: 100px 100px">
         <span class="bg-black">

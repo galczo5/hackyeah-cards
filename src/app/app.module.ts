@@ -19,6 +19,7 @@ import { ResourceCardComponent } from './resource-card/resource-card.component';
 import { GoalCardComponent } from './goal-card/goal-card.component';
 import { TheEndComponent } from './the-end/the-end.component';
 import { EpicBackgroundMusicPlayerComponent } from './epic-background-music-player/epic-background-music-player.component';
+import { TradeComponent } from './trade/trade.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { EpicBackgroundMusicPlayerComponent } from './epic-background-music-play
     ResourceCardComponent,
     GoalCardComponent,
     TheEndComponent,
-    EpicBackgroundMusicPlayerComponent
+    EpicBackgroundMusicPlayerComponent,
+    TradeComponent
   ],
   imports: [
     BrowserModule,

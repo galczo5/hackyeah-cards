@@ -1,0 +1,36 @@
+<div class="text-6xl mt-20 text-center">
+  Handluj
+</div>
+
+<div class="my-3 text-center">
+  Wybierz karte na handel
+</div>
+
+<div class="flex gap-3 justify-center">
+  <app-resource-card *ngFor="let card of (gameStateService.getActivePlayerDuplicatedCards() | async)"
+                     [card]="card"
+                     [active]="selectedCard === card"
+                     (click)="setSelectedCard(card)"></app-resource-card>
+
+</div>
+
+<div class="mb-3 mt-20 text-center">
+  Wybierz karte ktora kupujesz
+</div>
+
+<div class="flex gap-3 justify-center">
+  <app-resource-card [card]="ResourceCard.Drewno"
+                     [active]="toBuy === ResourceCard.Drewno"
+                     (click)="setCardToBuy(ResourceCard.Drewno)"></app-resource-card>
+  <app-resource-card [card]="ResourceCard.Zaprawa"
+                     [active]="toBuy === ResourceCard.Zaprawa"
+                     (click)="setCardToBuy(ResourceCard.Zaprawa)"></app-resource-card>
+  <app-resource-card [card]="ResourceCard.Cegla"
+                     [active]="toBuy === ResourceCard.Cegla"
+                     (click)="setCardToBuy(ResourceCard.Cegla)"></app-resource-card>
+</div>
+
+<div class="mt-20 flex justify-center gap-3">
+  <app-button routerLink="/game">Wroc</app-button>
+  <app-button (click)="trade()">Dobij targu</app-button>
+</div>

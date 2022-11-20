@@ -11,6 +11,9 @@ export class ResourceCardComponent implements OnInit {
   @Input()
   card: ResourceCard | undefined;
 
+  @Input()
+  active = false;
+
   constructor() { }
 
   ngOnInit(): void {

@@ -5,6 +5,7 @@ import {GameComponent} from "./game/game.component";
 import {IntroComponent} from "./intro/intro.component";
 import {ManualComponent} from "./manual/manual.component";
 import {TheEndComponent} from "./the-end/the-end.component";
+import {TradeComponent} from "./trade/trade.component";
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'game',
     component: GameComponent
+  },
+  {
+    path: 'trade',
+    component: TradeComponent
   },
   {
     path: 'the-end',

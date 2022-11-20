@@ -17,7 +17,7 @@
     <app-button [disabled]="nextUserService.isBlocked() | async"
                 (selected)="randomizeResources($event)">Tasuj zasoby</app-button>
     <app-button [disabled]="nextUserService.isBlocked() | async"
-                (selected)="instantNext($event)">Handluj</app-button>
+                (selected)="trade($event)">Handluj</app-button>
     <app-button [disabled]="nextUserService.isBlocked() | async"
                 (selected)="instantNext($event)">Pomin ture</app-button>
   </div>
